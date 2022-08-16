@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="pushButton_trainingData">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>load Training Data</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_testData">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load Test Data</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_validationData">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load Validation Data</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_results">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>540</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Visualise Results</string>
+    </property>
+   </widget>
+   <widget class="QListView" name="listView_display">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>10</y>
+      <width>581</width>
+      <height>501</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_trainingData</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadTrainingdata()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>72</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>298</x>
+     <y>46</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_validationData</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadValidationData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>158</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>363</x>
+     <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_testData</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>sloadTestData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>96</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>339</x>
+     <y>156</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_results</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadResults()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>662</x>
+     <y>556</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>550</x>
+     <y>543</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>loadTrainingData()</slot>
+  <slot>loadValidationData()</slot>
+  <slot>sloadTestData()</slot>
+  <slot>loadResults()</slot>
+ </slots>
+</ui>
