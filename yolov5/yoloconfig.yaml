@@ -1,0 +1,8 @@
+path: /home/ryanscodingden/IPS images
+train: /home/ryanscodingden/IPS images/train
+val: /home/ryanscodingden/IPS images/validation
+test: /home/ryanscodingden/IPS images/test
+nc: 2
+names:
+- Tree_group
+- Tree
