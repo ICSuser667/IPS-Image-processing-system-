@@ -187,6 +187,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_results</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadResults()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>661</x>
+     <y>553</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>338</x>
+     <y>565</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadTrainingData()</slot>

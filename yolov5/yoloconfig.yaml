@@ -1,7 +1,7 @@
 path: /home/ryanscodingden/IPS images
-train: /home/ryanscodingden/IPS images/train
-val: /home/ryanscodingden/IPS images/validation
-test: /home/ryanscodingden/IPS images/test
+train: /home/ryan/IPS-DATA/Data/train/images
+val: /home/ryan/IPS-DATA/Data/validation/images
+test: /home/ryan/IPS-DATA/Data/test/images
 nc: 2
 names:
 - Tree_group
