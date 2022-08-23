@@ -6,6 +6,10 @@ from PyQt6.QtWidgets import QFileDialog
 import yaml
 import subprocess
 import webbrowser
+import torch
+import os
+import pandas as pd
+
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -29,7 +33,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.editYaml(folder_name, "train")
 
     def loadValidationData(self):
-        folder_name = QFileDialog.getExistingDirectory(self,"Select Folder with validation data")
+        folder_name = QFileDialog.getExistingDirectory(self, "Select Folder with validation data")
         self.listWidget.addItem("Loading validation data from: " + str(folder_name))
         self.editYaml(folder_name, "val")
 
@@ -44,14 +48,51 @@ class MainWindow(QtWidgets.QMainWindow):
         qprocess.start('python3', ["visualise.py"])
         qprocess.waitForFinished()
         webbrowser.open('http://127.0.0.1:8050/')
-        # folder_name = QFileDialog.getExistingDirectory(self, "Select Results")
-        # self.listWidget.addItem("Loading results from: ", folder_name)
 
     def runModel(self):
         self.listWidget.addItem("Installing requirements")
         self.listWidget.addItem("Starting Model")
-        command = "cd yolov5 && pip3 install -r requirements.txt &&python train.py --hyp /home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5/data/hyps/hyp.scratch-low.yaml --img 640 --batch 16 --epochs 3 --data yoloconfig.yaml --weights best.pt"
-        subprocess.run(command, shell=True)
+        qprocess = QProcess(self)
+        # command = "cd yolov5 &&python train.py --hyp /home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5" \
+        # "/data/hyps/hyp.scratch-low.yaml --img 640 --batch 5 --epochs 3 --data yoloconfig.yaml --weights " \
+        #  "best.pt "
+        qprocess.start("python3", ["python train.py",
+                                   "--hyp /home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5/data/hyps"
+                                   "/hyp.scratch-low.yaml",
+                                   " --img 640", "--batch 5", "--epochs 3",
+                                   " --data yoloconfig.yaml",
+                                   " --weights best.pt "])
+
+    # subprocess.run(command, shell=True)
+
+    # detection methods
+    def loadUnlabeled(self):
+        # get the parent directory of the files
+        tree_data_location = QFileDialog.getExistingDirectory(self, "Load Unlabeled Tree data")
+        # tree_data = []
+        # tree_results=[]
+        if tree_data_location != "":
+            qprocess = QProcess(self)
+            qprocess.start("python3",
+                           ["/home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5/detect.py", "--weights ", (
+                               "--source /home/ryan/Downloads/driving long auto-20220823T094401Z-001/driving long auto/")])
+            #       for image in os.listdir(tree_data_location):
+            #         tree_data.append(os.path.join(tree_data_location, image))
+            #
+            #     #load local model
+            #     model = torch.hub.load("yolov5","custom",path="yolov5/best.pt", source="local")
+            #  do inference
+            #     for tree in tree_data:
+            #         results= model(tree)
+            #
+            qprocess.waitForFinished()
+            print("fin")
+
+        else:
+            self.listWidget.addItem("Canceled Load by User or there is no .png files found")
+
+    def detectTrees(self):
+        print("loose")
 
 
 app = QtWidgets.QApplication(sys.argv)

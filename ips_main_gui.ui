@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="pushButton_trainingData">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>30</y>
+      <x>0</x>
+      <y>40</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="pushButton_testData">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>130</y>
+      <x>0</x>
+      <y>120</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -43,7 +43,7 @@
    <widget class="QPushButton" name="pushButton_validationData">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>80</y>
       <width>171</width>
       <height>31</height>
@@ -69,8 +69,8 @@
    <widget class="QPushButton" name="pushButton_runModel">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>240</y>
+      <x>0</x>
+      <y>160</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -83,7 +83,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>160</y>
+      <y>190</y>
       <width>181</width>
       <height>51</height>
      </rect>
@@ -100,6 +100,58 @@
       <width>571</width>
       <height>511</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Model Training</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_runModel_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>300</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Detect Trees</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>230</y>
+      <width>181</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Predict using Saved model</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_runModel_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>260</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load Unlabeled Data</string>
     </property>
    </widget>
   </widget>
@@ -178,8 +230,8 @@
    <slot>runModel()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>52</x>
-     <y>200</y>
+     <x>42</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>146</x>
@@ -203,6 +255,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_runModel_3</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadUnlabeled()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>283</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>275</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_runModel_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>detectTrees()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>85</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>185</x>
+     <y>316</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadTrainingData()</slot>
@@ -210,5 +294,7 @@
   <slot>sloadTestData()</slot>
   <slot>loadResults()</slot>
   <slot>runModel()</slot>
+  <slot>loadUnlabeled()</slot>
+  <slot>detectTrees()</slot>
  </slots>
 </ui>
