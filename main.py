@@ -56,12 +56,12 @@ class MainWindow(QtWidgets.QMainWindow):
         # command = "cd yolov5 &&python train.py --hyp /home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5" \
         # "/data/hyps/hyp.scratch-low.yaml --img 640 --batch 5 --epochs 3 --data yoloconfig.yaml --weights " \
         #  "best.pt "
-        qprocess.start("python3", ["python train.py",
-                                   "--hyp /home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5/data/hyps"
-                                   "/hyp.scratch-low.yaml",
-                                   " --img 640", "--batch 5", "--epochs 3",
-                                   " --data yoloconfig.yaml",
-                                   " --weights best.pt "])
+        # qprocess.start("python3", ["python train.py",
+        #                            "--hyp /home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5/data/hyps"
+        #                            "/hyp.scratch-low.yaml",
+        #                            " --img 640", "--batch 5", "--epochs 3",
+        #                            " --data yoloconfig.yaml",
+        #                            " --weights best.pt "])
 
     # subprocess.run(command, shell=True)
 
@@ -69,24 +69,23 @@ class MainWindow(QtWidgets.QMainWindow):
     def loadUnlabeled(self):
         # get the parent directory of the files
         tree_data_location = QFileDialog.getExistingDirectory(self, "Load Unlabeled Tree data")
-        # tree_data = []
+        tree_data = []
         # tree_results=[]
         if tree_data_location != "":
-            qprocess = QProcess(self)
-            qprocess.start("python3",
-                           ["/home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5/detect.py", "--weights ", (
-                               "--source /home/ryan/Downloads/driving long auto-20220823T094401Z-001/driving long auto/")])
-            #       for image in os.listdir(tree_data_location):
-            #         tree_data.append(os.path.join(tree_data_location, image))
-            #
+            command = "cd yolov5 && python3 detect.py --weights best.pt --source \"" + tree_data_location + "\"" + " --save-txt"
+            print (command)
+            subprocess.run( command, shell=True)
+            print("fin")
+            # for image in os.listdir(tree_data_location):
+            #     tree_data.append(os.path.join(tree_data_location, image))
             #     #load local model
             #     model = torch.hub.load("yolov5","custom",path="yolov5/best.pt", source="local")
-            #  do inference
+            #     #  do inference
             #     for tree in tree_data:
             #         results= model(tree)
-            #
-            qprocess.waitForFinished()
-            print("fin")
+
+
+
 
         else:
             self.listWidget.addItem("Canceled Load by User or there is no .png files found")
