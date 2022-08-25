@@ -90,8 +90,6 @@ class MainWindow(QtWidgets.QMainWindow):
                     if name == "labels":
                         label = os.path.join(path, name)
                         label_dir.append(label)
-                    if name == "exp*":
-                        print("name", name)
 
             # print(label_dir)
             headers = ["capture_id", "latitude", "longitude"]
