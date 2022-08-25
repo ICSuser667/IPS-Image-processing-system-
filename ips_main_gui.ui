@@ -125,7 +125,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Detect Trees</string>
+     <string>Process CSV</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -151,7 +151,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Load Unlabeled Data</string>
+     <string>Run Inference on data</string>
     </property>
    </widget>
   </widget>

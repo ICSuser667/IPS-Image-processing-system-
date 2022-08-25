@@ -1,3 +1,4 @@
+import csv
 import sys
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6 import uic
@@ -8,7 +9,6 @@ import subprocess
 import webbrowser
 import torch
 import os
-import pandas as pd
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -44,10 +44,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def loadResults(self):
         self.listWidget.addItem("loading results")
+        # load large csv
+
         qprocess = QProcess(self)
         qprocess.start('python3', ["visualise.py"])
         qprocess.waitForFinished()
-        webbrowser.open('http://127.0.0.1:8050/')
+        #webbrowser.open('http://127.0.0.1:8050/')
 
     def runModel(self):
         self.listWidget.addItem("Installing requirements")
@@ -63,7 +65,7 @@ class MainWindow(QtWidgets.QMainWindow):
         #                            " --data yoloconfig.yaml",
         #                            " --weights best.pt "])
 
-    # subprocess.run(command, shell=True)
+        # subprocess.run(command, shell=True)
 
     # detection methods
     def loadUnlabeled(self):
@@ -71,18 +73,54 @@ class MainWindow(QtWidgets.QMainWindow):
         tree_data_location = QFileDialog.getExistingDirectory(self, "Load Unlabeled Tree data")
         tree_data = []
         # tree_results=[]
+        # if a folder is selected
         if tree_data_location != "":
             command = "cd yolov5 && python3 detect.py --weights best.pt --source \"" + tree_data_location + "\"" + " --save-txt"
-            print (command)
-            subprocess.run( command, shell=True)
+            print(command)
+            # run an inference
+            subprocess.run(command, shell=True)
             print("fin")
-            # for image in os.listdir(tree_data_location):
-            #     tree_data.append(os.path.join(tree_data_location, image))
-            #     #load local model
-            #     model = torch.hub.load("yolov5","custom",path="yolov5/best.pt", source="local")
-            #     #  do inference
-            #     for tree in tree_data:
-            #         results= model(tree)
+            # for directory in run detect
+            label_dir = []
+            # for all the runs
+            for path, dir, files in os.walk("yolov5/runs/detect"):
+                # for each folder in the directory
+                for name in dir:
+                    # if the folder is a labels folder add it to the list of labels folders
+                    if name == "labels":
+                        label = os.path.join(path, name)
+                        label_dir.append(label)
+                    if name == "exp*":
+                        print("name", name)
+
+            # print(label_dir)
+            headers = ["capture_id", "latitude", "longitude"]
+            capturedata = []
+            # for each label directory
+            for lab_dir in label_dir:
+                # get a list of the labels in the directory
+                label_list = os.listdir(lab_dir)
+                # get the capture id from the titles and
+                for doc in label_list:
+                    #skip the existing csv files
+                    if doc != "_detectionids.csv":
+                        data = doc.split("_")
+                        captureid = data[1]
+                        lat = data[3]
+                        long = data[5]
+                        long = long.removesuffix(".txt")
+                        capturedata.append([captureid, lat, long])
+
+                # write captureids to document
+                csvpath = lab_dir + "/_detectionids.csv"
+                with open(csvpath, 'w') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(headers)
+                    writer.writerows(capturedata)
+
+
+
+
 
 
 
