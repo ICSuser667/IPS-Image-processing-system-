@@ -14,7 +14,7 @@ Note the model is yolov5 based so expects the labels to in the same parent direc
 images ie /home/Train/Images (image location), /home/Train/Labels (Label for images)
 
 
-# usage inferencing (prediction)
+# Usage inferencing (prediction)
 To run inferencing on set of captured images simply hit the run inference button and select the folder the images are in,
 runs are stored in yolov5/runs/detect/exp<run number>. also note that the labels are saved as runs/detect/exp<runnumber>/labels.
 labels are only saved for postive detections 
