@@ -6,8 +6,6 @@ from PyQt6.QtCore import QProcess
 from PyQt6.QtWidgets import QFileDialog
 import yaml
 import subprocess
-import webbrowser
-import torch
 import os
 
 
@@ -49,7 +47,7 @@ class MainWindow(QtWidgets.QMainWindow):
         qprocess = QProcess(self)
         qprocess.start('python3', ["visualise.py"])
         qprocess.waitForFinished()
-        #webbrowser.open('http://127.0.0.1:8050/')
+        # webbrowser.open('http://127.0.0.1:8050/')
 
     def runModel(self):
         self.listWidget.addItem("Installing requirements")
@@ -75,7 +73,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # tree_results=[]
         # if a folder is selected
         if tree_data_location != "":
-            command = "cd yolov5 && python3 detect.py --weights best.pt --source \"" + tree_data_location + "\"" + " --save-txt"
+            command = "cd yolov5 && python3 detect.py --weights best.pt --source \"" + tree_data_location + "\"" + "--save-txt "
             print(command)
             # run an inference
             subprocess.run(command, shell=True)
@@ -100,7 +98,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 label_list = os.listdir(lab_dir)
                 # get the capture id from the titles and
                 for doc in label_list:
-                    #skip the existing csv files
+                    # skip the existing csv files
                     if doc != "_detectionids.csv":
                         data = doc.split("_")
                         captureid = data[1]
