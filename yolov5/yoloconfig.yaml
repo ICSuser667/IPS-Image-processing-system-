@@ -1,6 +1,6 @@
 path: /home/ryanscodingden/IPS images
 train: /home/ryan/IPS-DATA/Data/train/images
-val: /home/ryan/Downloads/driving long auto-20220823T094401Z-001/driving long auto
+val: /home/ryan/IPS-DATA/Data/validation/images
 test: /home/ryan/IPS-DATA/Data/test/images
 nc: 2
 names:

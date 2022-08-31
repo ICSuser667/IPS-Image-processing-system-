@@ -52,18 +52,19 @@ class MainWindow(QtWidgets.QMainWindow):
     def runModel(self):
         self.listWidget.addItem("Installing requirements")
         self.listWidget.addItem("Starting Model")
-        qprocess = QProcess(self)
-        # command = "cd yolov5 &&python train.py --hyp /home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5" \
-        # "/data/hyps/hyp.scratch-low.yaml --img 640 --batch 5 --epochs 3 --data yoloconfig.yaml --weights " \
-        #  "best.pt "
-        # qprocess.start("python3", ["python train.py",
-        #                            "--hyp /home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5/data/hyps"
-        #                            "/hyp.scratch-low.yaml",
-        #                            " --img 640", "--batch 5", "--epochs 3",
-        #                            " --data yoloconfig.yaml",
-        #                            " --weights best.pt "])
+        # qprocess = QProcess(self)
+        command = "cd yolov5 &&python train.py --hyp /home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5" \
+                  "/data/hyps/hyp.scratch-low.yaml --img 640 --batch 5 --epochs 3 --data yoloconfig.yaml --weights " \
+                  "best.pt "
+        # work in progress
+        # qprocess.start("python3", ["python3 train.py",
+        # "--hyp /home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5/data/hyps"
+        # "/hyp.scratch-low.yaml",
+        # " --img 640", "--batch 5", "--epochs 3",
+        # " --data yoloconfig.yaml",
+        # " --weights best.pt "])
 
-        # subprocess.run(command, shell=True)
+        subprocess.run(command, shell=True)
 
     # detection methods
     def loadUnlabeled(self):
