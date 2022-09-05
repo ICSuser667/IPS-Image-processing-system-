@@ -1,12 +1,14 @@
 import csv
+import os
+import subprocess
 import sys
-from PyQt6 import QtCore, QtGui, QtWidgets
+
+import pandas as pd
+import yaml
+from PyQt6 import QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import QProcess
 from PyQt6.QtWidgets import QFileDialog
-import yaml
-import subprocess
-import os
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -35,19 +37,23 @@ class MainWindow(QtWidgets.QMainWindow):
         self.listWidget.addItem("Loading validation data from: " + str(folder_name))
         self.editYaml(folder_name, "val")
 
-    def sloadTestData(self):
+    def loadTestData(self):
         folder_name = QFileDialog.getExistingDirectory(self, "Select Folder with testing data")
         self.listWidget.addItem("Loading Test data from: " + str(folder_name))
         self.editYaml(folder_name, "test")
 
     def loadResults(self):
         self.listWidget.addItem("loading results")
-        # load large csv
-
+        # select csv to load
+        csvpath = QFileDialog.getOpenFileName(self, "Select csv to display")
+        print(csvpath[0])
         qprocess = QProcess(self)
-        qprocess.start('python3', ["visualise.py"])
-        qprocess.waitForFinished()
-        # webbrowser.open('http://127.0.0.1:8050/')
+        if csvpath != "":
+            qprocess.start('python3', ["visualise.py", str(csvpath[0])])
+            qprocess.waitForFinished()
+            self.listWidget.addItem("finished loading: " + csvpath[0])
+        else:
+            self.listWidget.addItem("Cancelled displaying csv as none where selected")
 
     def runModel(self):
         self.listWidget.addItem("Installing requirements")
@@ -67,11 +73,9 @@ class MainWindow(QtWidgets.QMainWindow):
         subprocess.run(command, shell=True)
 
     # detection methods
-    def loadUnlabeled(self):
+    def runDetections(self):
         # get the parent directory of the files
-        tree_data_location = QFileDialog.getExistingDirectory(self, "Load Unlabeled Tree data")
-        tree_data = []
-        # tree_results=[]
+        tree_data_location = QFileDialog.getExistingDirectory(self, "Load Unlabeled Tree data for detections")
         # if a folder is selected
         if tree_data_location != "":
             command = "cd yolov5 && python3 detect.py --weights best.pt --source \"" + tree_data_location + "\"" + "--save-txt "
@@ -115,18 +119,29 @@ class MainWindow(QtWidgets.QMainWindow):
                     writer.writerow(headers)
                     writer.writerows(capturedata)
 
-
-
-
-
-
-
-
         else:
             self.listWidget.addItem("Canceled Load by User or there is no .png files found")
 
-    def detectTrees(self):
-        print("loose")
+    def createMasterCsv(self):
+        # list of all csv paths
+        dflist = []
+        # get a list of all existing csv files within the detect folder
+        for path, dir, files in os.walk("yolov5/runs/detect"):
+            # for each folder in the directory
+            for name in dir:
+                # if the folder is a labels folder add it to the list of labels folders
+                if name == "labels":
+                    csvpath = os.path.join(path, name)
+                    csvpath = csvpath + "/_detectionids.csv"
+                    df = pd.read_csv(csvpath)
+                    dflist.append(df)
+
+        print(dflist)
+
+        df_master = pd.concat(dflist, ignore_index=True, sort=True)
+        df_master= df_master.sort_values(by=["capture_id"])
+
+        df_master.to_csv("master.csv", index= False)
 
 
 app = QtWidgets.QApplication(sys.argv)

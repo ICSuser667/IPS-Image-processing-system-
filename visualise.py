@@ -3,8 +3,9 @@ from dash import dcc
 from dash import html
 import plotly.express as px
 import pandas as pd
-
-capturedata = pd.read_csv("/home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5/runs/detect/exp/labels/_detectionids.csv")
+import sys
+csvpath = sys.argv[1]
+capturedata = pd.read_csv(csvpath)
 fig = px.scatter_mapbox(capturedata, lat="latitude", lon="longitude", hover_name="capture_id",
                         color_discrete_sequence=["fuchsia"], zoom=10, height=900)
 fig.update_layout(mapbox_style="open-street-map")
@@ -18,4 +19,4 @@ app.layout = html.Div([
 ])
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server()

@@ -195,7 +195,7 @@
    <sender>pushButton_testData</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>sloadTestData()</slot>
+   <slot>loadTestData()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>96</x>
@@ -204,22 +204,6 @@
     <hint type="destinationlabel">
      <x>339</x>
      <y>156</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_results</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>loadResults()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>662</x>
-     <y>556</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>550</x>
-     <y>543</y>
     </hint>
    </hints>
   </connection>
@@ -259,7 +243,7 @@
    <sender>pushButton_runModel_3</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>loadUnlabeled()</slot>
+   <slot>runDetections()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>154</x>
@@ -275,15 +259,15 @@
    <sender>pushButton_runModel_2</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>detectTrees()</slot>
+   <slot>createMasterCsv()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>317</y>
+     <x>33</x>
+     <y>323</y>
     </hint>
     <hint type="destinationlabel">
-     <x>185</x>
-     <y>316</y>
+     <x>42</x>
+     <y>360</y>
     </hint>
    </hints>
   </connection>
@@ -291,10 +275,10 @@
  <slots>
   <slot>loadTrainingData()</slot>
   <slot>loadValidationData()</slot>
-  <slot>sloadTestData()</slot>
+  <slot>loadTestData()</slot>
   <slot>loadResults()</slot>
   <slot>runModel()</slot>
-  <slot>loadUnlabeled()</slot>
-  <slot>detectTrees()</slot>
+  <slot>runDetections()</slot>
+  <slot>createMasterCsv()</slot>
  </slots>
 </ui>
