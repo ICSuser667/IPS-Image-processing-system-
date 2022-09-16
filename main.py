@@ -139,9 +139,9 @@ class MainWindow(QtWidgets.QMainWindow):
         print(dflist)
 
         df_master = pd.concat(dflist, ignore_index=True, sort=True)
-        df_master= df_master.sort_values(by=["capture_id"])
+        df_master = df_master.sort_values(by=["capture_id"])
 
-        df_master.to_csv("master.csv", index= False)
+        df_master.to_csv("master.csv", index=False)
 
 
 app = QtWidgets.QApplication(sys.argv)

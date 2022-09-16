@@ -17,4 +17,8 @@ images ie /home/Train/Images (image location), /home/Train/Labels (Label for ima
 # Usage inferencing (prediction)
 To run inferencing on set of captured images simply hit the run inference button and select the folder the images are in,
 runs are stored in yolov5/runs/detect/exp<run number>. also note that the labels are saved as runs/detect/exp<runnumber>/labels.
-labels are only saved for postive detections 
+labels are only saved for positive detections 
+
+# Visualising data 
+Use the visualise button to select a csv file to load, also the process csv file button loads all csvs from all runs into 
+a csv file at home 
