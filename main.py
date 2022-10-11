@@ -2,13 +2,13 @@ import csv
 import os
 import subprocess
 import sys
-
 import pandas as pd
 import yaml
 from PyQt6 import QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import QProcess
 from PyQt6.QtWidgets import QFileDialog
+data_list=[]
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -63,7 +63,7 @@ class MainWindow(QtWidgets.QMainWindow):
                   "/data/hyps/hyp.scratch-low.yaml --img 640 --batch 5 --epochs 3 --data yoloconfig.yaml --weights " \
                   "best.pt "
         # work in progress
-        # qprocess.start("python3", ["python3 train.py",
+        # qprocess.start("python3", ["python3 yolov5/train.py",
         # "--hyp /home/ryan/PycharmProjects/IPS-Image-processing-system-/yolov5/data/hyps"
         # "/hyp.scratch-low.yaml",
         # " --img 640", "--batch 5", "--epochs 3",
