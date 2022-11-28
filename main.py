@@ -8,7 +8,8 @@ from PyQt6 import QtWidgets
 from PyQt6 import uic
 from PyQt6.QtCore import QProcess
 from PyQt6.QtWidgets import QFileDialog
-data_list=[]
+
+data_list = []
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -72,19 +73,20 @@ class MainWindow(QtWidgets.QMainWindow):
 
         subprocess.run(command, shell=True)
 
-    # detection methods
+    # run inference note this runs all
     def runDetections(self):
         # get the parent directory of the files
         tree_data_location = QFileDialog.getExistingDirectory(self, "Load Unlabeled Tree data for detections")
         # if a folder is selected
         if tree_data_location != "":
-            command = "cd yolov5 && python3 detect.py --weights best.pt --source \"" + tree_data_location + "\"" + "--save-txt "
+            command = "cd yolov5 && python3 detect.py --weights best.pt --source \"" + tree_data_location + "\"" + " --save-txt "
             print(command)
             # run an inference
             subprocess.run(command, shell=True)
             print("fin")
             # for directory in run detect
             label_dir = []
+            filepaths = []
             # for all the runs
             for path, dir, files in os.walk("yolov5/runs/detect"):
                 # for each folder in the directory
@@ -95,22 +97,31 @@ class MainWindow(QtWidgets.QMainWindow):
                         label_dir.append(label)
 
             # print(label_dir)
-            headers = ["capture_id", "latitude", "longitude"]
+            headers = ["capture_id", "latitude", "longitude", "capture_date","filepath"]
             capturedata = []
             # for each label directory
             for lab_dir in label_dir:
                 # get a list of the labels in the directory
                 label_list = os.listdir(lab_dir)
+                print(lab_dir)
                 # get the capture id from the titles and
-                for doc in label_list:
+                for title in label_list:
+                    # remove .txt
+                    file_path = lab_dir.removesuffix("labels")
+                    f = title.replace(".text", ".png")
+                    file_path = file_path + f
                     # skip the existing csv files
-                    if doc != "_detectionids.csv":
-                        data = doc.split("_")
-                        captureid = data[1]
-                        lat = data[3]
-                        long = data[5]
-                        long = long.removesuffix(".txt")
-                        capturedata.append([captureid, lat, long])
+                    if title != "_detectionids.csv":
+                        data = title.split("_")
+                        if len(data) == 8:
+                            captureid = data[1]
+                            lat = data[3]
+                            long = data[5]
+                            date = data[7]
+                            date = date.removesuffix(".txt")
+                            capturedata.append([captureid, lat, long, date, file_path])
+                        else:
+                            print("invalid file found: ", title)
 
                 # write captureids to document
                 csvpath = lab_dir + "/_detectionids.csv"
@@ -118,6 +129,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     writer = csv.writer(file)
                     writer.writerow(headers)
                     writer.writerows(capturedata)
+                self.listWidget.addItem("finished inferencing")
 
         else:
             self.listWidget.addItem("Canceled Load by User or there is no .png files found")
@@ -128,6 +140,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # get a list of all existing csv files within the detect folder
         for path, dir, files in os.walk("yolov5/runs/detect"):
             # for each folder in the directory
+
             for name in dir:
                 # if the folder is a labels folder add it to the list of labels folders
                 if name == "labels":
