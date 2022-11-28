@@ -1,5 +1,5 @@
 path: /home/ryanscodingden/IPS images
-train: /home/ryan/IPS-DATA/Data/train/images
+train: ''
 val: ''
 test: /home/ryan/IPS-DATA/Data/test/images
 nc: 2
